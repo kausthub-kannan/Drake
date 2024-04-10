@@ -1,0 +1,10 @@
+PyPDF2
+streamlit
+langchain
+deeplake
+assemblyai
+sentence-transformers
+youtube-transcript-api
+modal
+ctransformers
+langchain-google-genai

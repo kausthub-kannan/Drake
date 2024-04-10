@@ -1,0 +1,179 @@
+_type: few_shot
+example_prompt:
+  _type: prompt
+  input_types: {}
+  input_variables:
+  - answer
+  - context
+  - query
+  - rules
+  metadata: null
+  name: null
+  output_parser: null
+  partial_variables: {}
+  tags: null
+  template: "\n<Question> {query}\n \n<Context> {context}\n \n<Rules> {rules}\n \n\
+    <Answer> {answer}\n"
+  template_format: f-string
+  validate_template: false
+example_selector: null
+example_separator: '
+
+
+  '
+examples:
+- answer: "# Dense Cells\nStep 1: Define a set of grid points and assign the given\
+    \ data points on the grid.\nStep 2: Determine the dense and sparse cells. If the\
+    \ number of points in a cell exceeds the threshold value t, the cell is categorized\
+    \ as dense cell. Sparse cells are removed from the list.\nStep 3: Merge the dense\
+    \ cells if they are adjacent.\nStep 4: Form a list of grid cells for every subspace\
+    \ as output.\n\n#CILQUE\n **Stage 1:**\n- Step 1: Identify the dense cells.\n\
+    - Step 2: Merge dense cells c\u2081 and c\u2082 if they share the same interval.\n\
+    - Step 3: Generate a particle rule to generate (k + 1)th cell for higher dimension.\
+    \ Then, check whether the number of points cross the threshold. This is repeated\
+    \ till there are no dense cells or new generation of dense cells.\n\n**Stage 2:**\n\
+    - Step 1: Merging of dense cells into a cluster is carried out in each subspace\
+    \ using maximal regions to cover dense cells. The maximal region is an hyperrectangle\
+    \ where all cells fall into.\n- Step 2: Maximal region tries to cover all dense\
+    \ cells to form clusters.\n\n # DBSCAN\n- Step 1: Randomly select a point p. Compute\
+    \ distance between p and all other points.\n- Step 2: Find all points from p with\
+    \ respect to its neighborhood and check whether it has minimum number of points\
+    \ m. If so, it is marked as a core point.\n- Step 3: If it is a core point, then\
+    \ a new cluster is formed, or existing cluster is enlarged.\n- Step 4: If it is\
+    \ a border point, then the algorithm moves to the next point and marks it as visited.\n\
+    - Step 5: If it is a noise point, they are removed.\n- Step 6: Merge the clusters\
+    \ if it is mergeable, dist (c, c) < \u025B.\n- Step 7: Repeat the process 3-6\
+    \ till all points are processed."
+  context: "DBSACN\nStep 1: Randomly select a point p. Compute distance between P\
+    \ and ail other points '\nStep 2: Find all points]from p with respect to its neighbourhoud\
+    \ and check whether it has minimum number of points m. If 80, it is marked as\
+    \ a core point\nStep 3: If it is a core point, then a new cluster is formed, or\
+    \ existing cluster 1s enlarged.\nStep 4: [fit is a border point, then the algorithm\
+    \ moves to the next point and marks it as visited\nStep 5: If it is a noise point,\
+    \ they are removed.\nStep 6: Merge the clusters if it is mergeable, dist (cc )<\
+    \ \xA2.\nStep 7: Repeat the process 3-6 till all Points are processed. \n\nDense\
+    \ Cell\nStep 1: Defining a set of grid points and assigning the given data points\
+    \ on the grid.\nStep 2: Determine the dense and sparse cells. lf the number of\
+    \ points in a cell exceeds the threshold\nvalue t, the cell is categorized as\
+    \ a dense cell. Sparse cells are removed from the list.\nStep 3: Merge the dense\
+    \ cells if they are adjacent.\nStep 4: Form a list of grid cells for every subspace\
+    \ as output.\n\nCLIQUE\nStage 1\nStep 1: Identify the dense cells\nStep 2: Merge\
+    \ dense cells c. and c, if they share the same interval.\nStep 3: Generate Apriori\
+    \ rule to generate (k + 1)\" cell tor higher dimension. Then, check\nwhether the\
+    \ number of points across the threshold This 1s repeated till there are no\ndense\
+    \ cells or a new generation of dense cells\n\nStage 2\nStep 1: Merging of dense\
+    \ cells into a cluster is carried out in each subspace using maximal regions to\
+    \ cover dense cells The maximal region is a hyperrectangle where all cells fall\
+    \ into.\nStep 2; Maximal region tries to cover all dense cells to form clusters."
+  query: Assess DBSCAN, Dense cells and CLIQUE with appropriate steps. (8 marks)
+  rules: "- If the question says answer for X number of marks, you have to provide\
+    \ X number of points.\n - Each point has to be explained in 3-4 sentences.\n -\
+    \ In case the context express a mathematical equation, provide the equation in\
+    \ LaTeX format as shown in the example.\n - In case the user requests for a code\
+    \ snippet, provide the code snippet in the language specified in the example.-\
+    \ If the user requests to summarise or use the previous message as context ignoring\
+    \ the explicit context given in the message."
+- answer: 'Sharding is a technique for dividing a large database into smaller, manageable
+    parts called shards, which are stored across multiple servers or nodes. This process
+    enhances scalability, performance, and fault tolerance by distributing data and
+    processing load. Sharding works by partitioning data based on criteria like geographic
+    location, user ID, or time period, and each shard is responsible for a subset
+    of the data. This method allows for horizontal scaling, improving the system''s
+    capacity to handle large volumes of data and requests efficiently.
+
+
+    The system uses a shard key to identify which shard contains the required data
+    for a query. The shard key is a unique identifier that maps data to its corresponding
+    shard. Upon receiving a query, the system determines the appropriate shard and
+    forwards the query to the correct server or node.
+
+
+    **Features of Sharding:**
+
+    - Sharding makes the database smaller, faster, and more manageable.
+
+    - It can be complex to implement.
+
+    - Sharding reduces transaction costs and allows each shard to read and write its
+    own data.
+
+    - Many NoSQL databases offer auto-sharding.
+
+    - Failure of one shard does not affect the data processing of other shards.
+
+
+    **Benefits of Sharding:**
+
+    1. **Improved Scalability:** Sharding allows horizontal scaling by adding more
+    servers or nodes, enhancing the system''s capacity to handle large volumes of
+    data and requests.
+
+    2. **Increased Performance:**By distributing data across multiple servers or nodes,
+    sharding improves performance, resulting in faster response times and better throughput.
+
+    3. **Fault Tolerance:** Sharding provides fault tolerance as the system can continue
+    to function even if one or more servers or nodes fail, thanks to data replication
+    across multiple servers or nodes.
+
+    4. **Reduced Costs:** Horizontal scaling with sharding can be more cost-effective
+    than vertical scaling by upgrading hardware, as it can be done using commodity
+    hardware, which is typically less expensive than high-end servers.'
+  context: "It is a very important concept that helps the system to keep data in different\
+    \ resources\naccording to the sharding process. The word \u201CShard\u201D means\
+    \ \u201Ca small part of a\nwhole\u201C. Hence Sharding means dividing a larger\
+    \ part into smaller parts. In DBMS,\nSharding is a type of DataBase partitioning\
+    \ in which a large database is divided or\n\npartitioned into smaller data and\
+    \ different nodes. These shards are not only smaller,\nbut also faster and hence\
+    \ easily manageable.\nHow does Sharding work?\nIn a sharded system, the data is\
+    \ partitioned into shards based on a predetermined\ncriterion. For example, a\
+    \ sharding scheme may divide the data based on geographic\nlocation, user ID,\
+    \ or time period. Once the data is partitioned, it is distributed across\nmultiple\
+    \ servers or nodes. Each server or node is responsible for storing and processing\
+    \ a\nsubset of the data.\nExample:\n\nTo query data from a sharded database, the\
+    \ system needs to know which shard contains\nthe required data. This is achieved\
+    \ using a shard key, which is a unique identifier that is\nused to map the data\
+    \ to its corresponding shard. When a query is received, the system\nuses the shard\
+    \ key to determine which shard contains the required data and then sends\nthe\
+    \ query to the appropriate server or node.\nFeatures of Sharding:\n\uF0B7 Sharding\
+    \ makes the Database smaller\n\uF0B7 Sharding makes the Database faster\n\uF0B7\
+    \ Sharding makes the Database much more easily manageable\n\uF0B7 Sharding can\
+    \ be a complex operation sometimes\n\uF0B7 Sharding reduces the transaction cost\
+    \ of the Database\n\uF0B7 Each shard reads and writes its own data.\n\uF0B7 Many\
+    \ NoSQL databases offer auto-sharding.\n\uF0B7 Failure of one shard doesn\u2019\
+    t effect the data processing of other shards.\nBenefits of Sharding:\n1. Improved\
+    \ Scalability: Sharding allows the system to scale horizontally by adding more\n\
+    servers or nodes as the data grows. This improves the system\u2019s capacity to\
+    \ handle\nlarge volumes of data and requests.\n\n2. Increased Performance: Sharding\
+    \ distributes the data across multiple servers or\nnodes, which improves the system\u2019\
+    s performance by reducing the load on each server\nor node. This results in faster\
+    \ response times and better throughput.\n3. Fault Tolerance: Sharding provides\
+    \ a degree of fault tolerance as the system can\ncontinue to function even if\
+    \ one or more servers or nodes fail. This is because the data\nis replicated across\
+    \ multiple servers or nodes, and if one fails, the others can continue\nto serve\
+    \ the requests.\n4. Reduced Costs: Sharding allows the system to scale horizontally,\
+    \ which can be more\ncost-effective than scaling vertically by upgrading hardware.\
+    \ This is because horizontal\nscaling can be done"
+  query: Explain sharding in system design along with its benefits. (10 marks)
+  rules: "- If the question says answer for X number of marks, you have to provide\
+    \ X number of points.\n - Each point has to be explained in 3-4 sentences.\n -\
+    \ In case the context express a mathematical equation, provide the equation in\
+    \ LaTeX format as shown in the example.\n - In case the user requests for a code\
+    \ snippet, provide the code snippet in the language specified in the example.-\
+    \ If the user requests to summarise or use the previous message as context ignoring\
+    \ the explicit context given in the message.\n"
+input_types: {}
+input_variables:
+- context
+- query
+- rules
+metadata: null
+name: null
+output_parser: null
+partial_variables: {}
+prefix: "\nYou are assisting a student to understand topics.\n \nYou have to answer\
+  \ the below question by utilising the below context to answer the question.\nNote\
+  \ to follow the rules given below.\n"
+suffix: "\n<Question> {query}\n \n<Context> {context}\n \n<Rules> {rules}\n <Answer>"
+tags: null
+template_format: f-string
+validate_template: false
