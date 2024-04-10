@@ -49,7 +49,7 @@ if video_url:
                     encoded_text = notes.encode('utf-8')
                     st.success("Notes generated successfully")
                     if st.download_button(
-                        label="Download data as Markdown",
+                        label="Download your notes",
                         data=encoded_text,
                         file_name='your_notes.md',
                         mime='text/markdown',

@@ -1,10 +1,15 @@
 import streamlit as st
 from app import disable_sidebar, initialize_models
-from model import DrakeLM
-from utilis import Processing
 
 disable_sidebar()
-col1, col2 = st.columns([1.2, 0.3])
+col1, col2= st.columns([3, 1.6])
+
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+if "chat_notes" not in st.session_state:
+    st.session_state.chat_notes = f""""""
+    st.session_state.encoded_text = st.session_state.chat_notes.encode('utf-8')
 
 col1.title('Chat with Drake!')
 if col2.button("Home"):
@@ -13,10 +18,14 @@ if col2.button("Home"):
 universal_chat = st.toggle("Universal Chat")
 st.caption("Note: Universal Chat uses the complete DB to retrieve context, use it with caution")
 
-st.divider()
+st.download_button(
+    label="Export",
+    data=st.session_state.encoded_text,
+    file_name='chat_history.md',
+    mime='text/markdown',
+)
 
-if "messages" not in st.session_state:
-    st.session_state.messages = []
+st.divider()
 
 # Display chat messages from history on app rerun
 for message in st.session_state.messages:
@@ -38,6 +47,11 @@ if prompt := st.chat_input("Ask Drake your questions"):
         else:
             response = drake.ask_llm(query, metadata_filter=st.session_state["metadata"])
 
+        st.session_state.chat_notes += query + "\n" + response + "\n\n"
+        st.session_state.encoded_text = st.session_state.chat_notes.encode('utf-8')
+
         with st.chat_message("assistant"):
             st.markdown(response)
             st.session_state.messages.append({"role": "assistant", "content": response})
+
+
