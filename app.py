@@ -1,8 +1,10 @@
 import streamlit as st
 from model import DrakeLM
 from utilis import Processing
+import re
 
 initial_page = "pages/upload_url.py"
+
 
 @st.cache_resource()
 def initialize_models():
@@ -37,7 +39,13 @@ def disable_sidebar(page_title: str):
 
 def main():
     disable_sidebar("Drake")
-    st.title("Drake")
+    with open("README.md", "r") as f:
+        content = f.read()
+
+    content = re.sub(fr"{'---'}(.*?){'---'}", "", content, flags=re.DOTALL)
+
+    st.markdown(content, unsafe_allow_html=True)
+    st.divider()
 
     with st.spinner("Loading models..."):
         processing, drake = initialize_models()
