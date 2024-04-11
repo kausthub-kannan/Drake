@@ -1,9 +1,6 @@
 import streamlit as st
 from app import disable_sidebar, initialize_models
 
-if "metadata" not in st.session_state:
-    st.switch_page("app.py")
-
 disable_sidebar("Drake | Chat")
 col1, col2= st.columns([3, 1.6])
 
