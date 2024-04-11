@@ -2,7 +2,7 @@
 title: Drake
 emoji: ⚡
 colorFrom: red
-colorTo: black
+colorTo: gray
 sdk: streamlit
 pinned: false
 ---
