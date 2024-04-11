@@ -16,7 +16,8 @@ if st.button("Youtube/Video URL"):
 st.subheader('Upload the file')
 uploaded_file = st.file_uploader(label="Choose a file", type=['pdf', 'doc'])
 allow_make_notes = st.toggle('Make Complete Notes!')
-llm_model = st.selectbox('Choose LLM Model', ('gemini-pro', 'llama', 'Mobile phone'))
+llm_model = st.selectbox('Choose LLM Model', 'gemini-pro')
+# llm_model = st.selectbox('Choose LLM Model', ('gemini-pro', 'llama'))
 drake.llm_model = llm_model
 
 

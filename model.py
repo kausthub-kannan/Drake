@@ -10,6 +10,15 @@ from langchain_core.documents.base import Document
 
 class DrakeLM:
     def __init__(self, model_path: str, db: DeepLake, config: dict, llm_model="gemini-pro"):
+        """
+        Parameters:
+            model_path (str): The path to the model in case running Llama
+            db (DeepLake): The DeepLake DB object
+            config (dict): The configuration for the llama model
+            llm_model (str): The LLM model type
+
+        Initialize the DrakeLM model
+        """
         self.llm_model = llm_model
 
         if llm_model == "llama":
@@ -25,7 +34,18 @@ class DrakeLM:
         self.notes_prompt = load_prompt("prompt_templates/notes_prompt.yaml")
         self.chat_prompt = load_prompt("prompt_templates/chat_prompt.yaml")
 
-    def _chat_prompt(self, query: str, context: str):
+    def _chat_prompt(self, query: str, context: str) -> (PromptTemplate, str):
+        """
+        Parameters:
+            query (str): The question asked by the user
+            context (str): The context retrieved from the DB
+
+        Returns:
+            PromptTemplate: The prompt template for the chat
+            prompt (str): The prompt string for the chat
+
+        Create the chat prompt for the LLM model
+        """
         prompt = """You are assisting a student to understand topics. \n\n 
          You have to answer the below question by utilising the below context to answer the question. \n\n 
          Note to follow the rules given below \n\n 
@@ -46,7 +66,19 @@ class DrakeLM:
         prompt = prompt.format(query=query, context=context, rules=rules)
         return PromptTemplate.from_template(prompt), prompt
 
-    def _retrieve(self, query: str, metadata_filter, k=3, distance_metric="cos"):
+    def _retrieve(self, query: str, metadata_filter, k=3, distance_metric="cos") -> str:
+        """
+        Parameters:
+            query (str): The question asked by the user
+            metadata_filter (dict): The metadata filter for the DB
+            k (int): The number of documents to retrieve
+            distance_metric (str): The distance metric for retrieval
+
+        Returns:
+            str: The context retrieved from the DB
+
+        Retrieve the context from the DB
+        """
         self.retriever.search_kwargs["distance_metric"] = distance_metric
         self.retriever.search_kwargs["k"] = k
 
@@ -65,7 +97,17 @@ class DrakeLM:
 
         return context
 
-    def ask_llm(self, query: str, metadata_filter: dict = None):
+    def ask_llm(self, query: str, metadata_filter: dict = None) -> str:
+        """
+        Parameters:
+            query (str): The question asked by the user
+            metadata_filter (dict): The metadata filter for the DB
+
+        Returns:
+            str: The response from the LLM model
+
+        Ask the LLM model a question
+        """
         context = self._retrieve(query, metadata_filter)
         print("Retrieved context")
         prompt_template, prompt_string = self._chat_prompt(query, context)
@@ -89,7 +131,16 @@ class DrakeLM:
 
         return self.chat_history.messages[-1].content
 
-    def create_notes(self, documents: List[Document]):
+    def create_notes(self, documents: List[Document]) -> str:
+        """
+        Parameters:
+            documents (List[Document]): The list of documents to create notes from
+
+        Returns:
+            str: The notes generated from the LLM model
+
+        Create notes from the LLM model
+        """
         rules = """
         - Follow the Markdown format for creating notes as shown in the example.
         - The heading of the content should be the title of the markdown file.

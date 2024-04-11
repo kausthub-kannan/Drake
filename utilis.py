@@ -13,16 +13,12 @@ from typing import Dict
 import uuid
 
 
-
 class Processing:
-    def __init__(self, dataset_path: str, embedding_model_name: str,
-                 device='cpu', chunk_size=500, chunk_overlap=5):
+    def __init__(self, dataset_path: str, embedding_model_name: str, chunk_size=500, chunk_overlap=5):
         """
         Parameters:
             dataset_path (str): Path to the dataset in the Vector-DB
-            file_path (str): Path to the file to be processed
             embedding_model_name (str): Name of the HuggingFace model to be used for embeddings
-            device (str): Device to run the embedding model on
             chunk_size (int): Size of each chunk to be processed
             chunk_overlap (int): Overlap between each chunk
 
@@ -34,7 +30,6 @@ class Processing:
 
         self.embedding_model = HuggingFaceEmbeddings(
             model_name=embedding_model_name,
-            model_kwargs={'device': device},
             encode_kwargs={'normalize_embeddings': False}
         )
 
@@ -43,8 +38,8 @@ class Processing:
                            exec_option="compute_engine"
                            )
 
-    def _add_metadata(self, documents: List[Document], url: str, id: str, source: str, file_type: str, course_tag="") -> (List[
-        Document], Dict[str, str]):
+    def _add_metadata(self, documents: List[Document], url: str, id: str, source: str, file_type: str,
+                      course_tag="") -> (List[Document], Dict[str, str]):
         """
         Parameters:
             documents (List[Document]): List of documents to add metadata to
@@ -54,7 +49,7 @@ class Processing:
             course_tag (str): Tag to identify the course the documents belongs to
 
         Returns:
-            documents (List[Document]): List of documents with metadata added
+            documents (List[Document], Dict[str, str): List of documents with metadata added along with the metadata
 
         Add metadata to the documents
         """
@@ -69,10 +64,10 @@ class Processing:
             doc.metadata = metadata
         return documents, metadata
 
-    def load_pdf(self, name, text) -> (List[Document], Dict[str, str]):
+    def load_pdf(self, text) -> (List[Document], Dict[str, str]):
         """
         Returns:
-            pdf_chunk (List[Document]): List of documents with metadata added
+            documents (List[Document], Dict[str, str): List of documents with metadata added along with the metadata
 
         Load PDF file, split into chunks and add metadata
         """
@@ -83,7 +78,7 @@ class Processing:
     def load_transcript(self, url) -> (List[Document], Dict[str, str]):
         """
         Returns:
-            transcript_chunk (List[Document]): List of documents with metadata added
+            documents (List[Document], Dict[str, str): List of documents with metadata added along with the metadata
 
         Load transcript, split into chunks and add metadata
         """
@@ -91,12 +86,13 @@ class Processing:
         print("Transcribed")
         transcript_chunk = self.text_splitter.create_documents([transcript.text])
         print("Created transcript chunks")
-        return self._add_metadata(transcript_chunk, url="NaN", id=str(uuid.uuid4()), source="custom_video", file_type="transcript")
+        return self._add_metadata(transcript_chunk, url="NaN", id=str(uuid.uuid4()), source="custom_video",
+                                  file_type="transcript")
 
     def load_yt_transcript(self, url) -> (List[Document], Dict[str, str]):
         """
         Returns:
-            yt_transcript_chunk (List[Document]): List of documents with metadata added
+            documents (List[Document], Dict[str, str): List of documents with metadata added along with the metadata
 
         Load YouTube transcript, split into chunks and add metadata
         """
