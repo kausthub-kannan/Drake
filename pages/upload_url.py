@@ -29,17 +29,17 @@ if video_url:
             try:
                 documents, metadata = processing.load_yt_transcript(video_url)
                 st.session_state["metadata"] = {"id": metadata["id"]}
-                st.success("Successfully chunked the file")
             except Exception as e:
                 print(e)
                 st.error("Error in chunking")
 
             # Uploading to DB
-            with st.spinner('Please wait, documents uploading ...'):
-                try:
-                    processing.upload_to_db(documents)
-                except Exception as e:
-                    st.error("Error in uploading")
+        with st.spinner('Please wait, documents uploading ...'):
+            try:
+                processing.upload_to_db(documents)
+                st.success("Successfully uploaded the file")
+            except Exception as e:
+                st.error("Error in uploading")
 
         # Generating Notes
         if allow_make_notes:
