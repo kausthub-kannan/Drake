@@ -13,8 +13,8 @@ if st.button("PDF/Transcript"):
 
 st.subheader('Enter the Video URL')
 video_url = st.text_input(label="Enter the URL")
-llm_model = st.selectbox('Choose LLM Model', 'gemini-pro')
-# llm_model = st.selectbox('Choose LLM Model', ('gemini-pro', 'llama'))
+llm_model = st.selectbox('Choose LLM Model', ('gemini-pro', 'llama'))
+st.caption("Note: Llama support to be added soon!")
 drake.llm_model = llm_model
 
 allow_make_notes = st.toggle('Make Complete Notes!')
