@@ -1,3 +1,12 @@
+---
+title: Drake
+emoji: ⚡
+colorFrom: red
+colorTo: black
+sdk: streamlit
+pinned: false
+---
+
 # Drake
 **Make Notes without mess**
 
