@@ -10,7 +10,7 @@ pinned: false
 # Drake
 **Make Notes without mess**
 
-DrakeLLM is developed to help students to solve the issue of making notes from videos and LLMs. Utilising RAG, Drake helps in making quick notes along with a Q&A bot. Books, YouTube tutorials or Videos, Drake supports all your means.
+DrakeLLM is developed to help students to solve the issue of making notes from videos, books and others. Utilising RAG, Drake helps in making quick notes along with a Q&A bot. Books, YouTube tutorials or Videos, Drake supports all your means.
 
 ## Features
 - **Quick Notes**: Make notes quickly with Drake.
