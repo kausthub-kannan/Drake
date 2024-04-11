@@ -35,6 +35,9 @@ def disable_sidebar(page_title: str):
     """
     st.markdown(no_sidebar_style, unsafe_allow_html=True)
 
+    if "metadata" not in st.session_state:
+        st.switch_page("app.py")
+
 
 def main():
     disable_sidebar("Drake")
