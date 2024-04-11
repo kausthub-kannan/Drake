@@ -2,10 +2,10 @@ import streamlit as st
 import io
 import PyPDF2
 from app import disable_sidebar, initialize_models
-from model import DrakeLM
-from utilis import Processing
 
-disable_sidebar()
+
+disable_sidebar("Drake | Upload File")
+processing, drake = initialize_models()
 st.title('Drake')
 st.subheader('Learn without the mess of making notes!')
 st.divider()
@@ -16,6 +16,8 @@ if st.button("Youtube/Video URL"):
 st.subheader('Upload the file')
 uploaded_file = st.file_uploader(label="Choose a file", type=['pdf', 'doc'])
 allow_make_notes = st.toggle('Make Complete Notes!')
+llm_model = st.selectbox('Choose LLM Model', ('gemini-pro', 'llama', 'Mobile phone'))
+drake.llm_model = llm_model
 
 
 if uploaded_file:
@@ -31,7 +33,6 @@ if uploaded_file:
                 for page in pdf_reader.pages:
                     text += page.extract_text()
 
-                processing, drake = initialize_models()
                 documents, metadata = processing.load_pdf("hello world", text)
                 st.session_state["metadata"] = metadata
                 st.success("Successfully chunked the file")

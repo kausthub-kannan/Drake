@@ -22,8 +22,8 @@ def initialize_models():
     return processing, drake
 
 
-def disable_sidebar():
-    st.set_page_config(page_title="Upload",
+def disable_sidebar(page_title: str):
+    st.set_page_config(page_title=page_title,
                        page_icon=None,
                        layout="centered",
                        initial_sidebar_state="collapsed",
@@ -37,7 +37,7 @@ def disable_sidebar():
 
 
 def main():
-    disable_sidebar()
+    disable_sidebar("Drake")
     initialize_models()
     st.switch_page(initial_page)
 

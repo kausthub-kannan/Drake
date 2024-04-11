@@ -1,7 +1,7 @@
 import streamlit as st
 from app import disable_sidebar, initialize_models
 
-disable_sidebar()
+disable_sidebar("Drake | Chat")
 col1, col2= st.columns([3, 1.6])
 
 if "messages" not in st.session_state:

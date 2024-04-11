@@ -1,11 +1,8 @@
 import streamlit as st
-
 from app import disable_sidebar, initialize_models
-from model import DrakeLM
-from utilis import Processing
 
 # Upload Template
-disable_sidebar()
+disable_sidebar("Drake | Upload URL")
 processing, drake = initialize_models()
 st.title('Drake')
 st.subheader('Learn without the mess of making notes!')
@@ -16,6 +13,9 @@ if st.button("PDF/Transcript"):
 
 st.subheader('Enter the Video URL')
 video_url = st.text_input(label="Enter the URL")
+llm_model = st.selectbox('Choose LLM Model', ('gemini-pro', 'llama', 'Mobile phone'))
+drake.llm_model = llm_model
+
 allow_make_notes = st.toggle('Make Complete Notes!')
 
 
@@ -34,11 +34,11 @@ if video_url:
                 st.error("Error in chunking")
 
             # Uploading to DB
-            # with st.spinner('Please wait, documents uploading ...'):
-            #     try:
-            #         processing.upload_to_db(documents)
-            #     except Exception as e:
-            #         st.error("Error in uploading")
+            with st.spinner('Please wait, documents uploading ...'):
+                try:
+                    processing.upload_to_db(documents)
+                except Exception as e:
+                    st.error("Error in uploading")
 
         # Generating Notes
         if allow_make_notes:
