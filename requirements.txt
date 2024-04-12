@@ -1,10 +1,10 @@
 PyPDF2
+pdf2image
+pytesseract
 streamlit
 langchain
 deeplake
 assemblyai
 sentence-transformers
 youtube-transcript-api
-modal
-ctransformers
 langchain-google-genai

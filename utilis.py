@@ -11,6 +11,9 @@ from langchain.prompts.few_shot import FewShotPromptTemplate
 from langchain.prompts.prompt import PromptTemplate
 from typing import Dict
 import uuid
+from pdf2image import convert_from_bytes
+import pytesseract
+from pytesseract import Output
 
 
 class Processing:
@@ -74,6 +77,29 @@ class Processing:
         pdf_chunk = self.text_splitter.create_documents([text])
         print("Created document chunks")
         return self._add_metadata(pdf_chunk, url="NaN", id=str(uuid.uuid4()), source="document", file_type="pdf")
+
+    def load_scanned_pdf(self, file) -> str:
+        """
+        Parameters:
+            file (File): Scanned PDF file to be processed
+
+        Returns:
+            str: Text extracted from the scanned PDF file
+
+        Extract text from scanned PDF file
+        """
+        images = convert_from_bytes(file)
+
+        all_text = ""
+        for image in images:
+            # Perform OCR on the image
+            text = pytesseract.image_to_data(image, lang='eng', output_type=Output.DICT)
+
+            # Extract text from the dictionary
+            page_text = " ".join(text['text'])
+            all_text += page_text + "\n"
+
+        return all_text
 
     def load_transcript(self, url) -> (List[Document], Dict[str, str]):
         """

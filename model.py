@@ -9,24 +9,15 @@ from langchain_core.documents.base import Document
 
 
 class DrakeLM:
-    def __init__(self, model_path: str, db: DeepLake, config: dict, llm_model="gemini-pro"):
+    def __init__(self, model_path: str, db: DeepLake, config: dict):
         """
         Parameters:
             model_path (str): The path to the model in case running Llama
             db (DeepLake): The DeepLake DB object
             config (dict): The configuration for the llama model
-            llm_model (str): The LLM model type
 
         Initialize the DrakeLM model
         """
-        self.llm_model = llm_model
-
-        if llm_model == "llama":
-            self.llama = CTransformers(
-                model=model_path,
-                model_type="llama",
-                config=config
-            )
         self.gemini = ChatGoogleGenerativeAI(model="gemini-pro", convert_system_message_to_human=True)
         self.retriever = db.as_retriever()
         self.chat_history = ChatMessageHistory()
@@ -123,11 +114,7 @@ class DrakeLM:
         """
 
         prompt_template = self.chat_prompt.format(query=query, context=context, rules=rules)
-
-        if self.llm_model == "llama":
-            self.chat_history.add_ai_message(AIMessage(content=self.llama.invoke(prompt_template)))
-        else:
-            self.chat_history.add_ai_message(AIMessage(content=self.gemini.invoke(prompt_template).content))
+        self.chat_history.add_ai_message(AIMessage(content=self.gemini.invoke(prompt_template).content))
 
         return self.chat_history.messages[-1].content
 
