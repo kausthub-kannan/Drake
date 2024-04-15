@@ -1,5 +1,6 @@
+import warnings
+
 from langchain_community.chat_message_histories.in_memory import ChatMessageHistory
-from langchain_community.llms.ctransformers import CTransformers
 from langchain_community.vectorstores import DeepLake
 from langchain_core.messages import AIMessage
 from langchain_core.prompts import PromptTemplate, load_prompt
@@ -99,6 +100,7 @@ class DrakeLM:
 
         Ask the LLM model a question
         """
+        warnings.filterwarnings("ignore", message="Convert_system_message_to_human will be deprecated!")
         context = self._retrieve(query, metadata_filter)
         print("Retrieved context")
         prompt_template, prompt_string = self._chat_prompt(query, context)
@@ -134,7 +136,7 @@ class DrakeLM:
         - Create subheadings for each section.
         - Use numbered bullet points for each point.   
         """
-
+        warnings.filterwarnings("ignore", message="Convert_system_message_to_human will be deprecated!")
         notes_chunk = []
         for doc in documents:
             prompt = self.notes_prompt.format(content_chunk=doc.page_content, rules=rules)
