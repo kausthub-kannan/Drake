@@ -47,13 +47,13 @@ if video_url:
                     notes = drake.create_notes(documents)
                     encoded_text = notes.encode('utf-8')
                     st.success("Notes generated successfully")
-                    if st.download_button(
+                    st.download_button(
                         label="Download your notes",
                         data=encoded_text,
                         file_name='your_notes.md',
                         mime='text/markdown',
-                    ):
-                        st.switch_page("pages/chat.py")
+                    )
+                    st.page_link("pages/chat.py", label="Chat with Drake")
                 except Exception as e:
                     print(e)
                     st.error("Error in generating notes")
