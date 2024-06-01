@@ -3,6 +3,8 @@ pdf2image
 pytesseract
 streamlit
 langchain
+langchain-community
+langchain-core
 deeplake
 assemblyai
 sentence-transformers
